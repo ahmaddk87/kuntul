@@ -1,63 +1,63 @@
 working_dir: &working_dir ~/app
-.build_template: &script
+.amed_template: &script
   steps:
     - checkout
     - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
     - run: chmod +x ./cc-test-reporter
-    - run: ./cc-test-reporter before-build
+    - run: ./cc-test-reporter before-amed
     - run: gem install bundler:2.1.4
     - run: bundle install --jobs=4 --retry=4 --path vendor/bundle
     - run: bundle exec rake rubocop
     - run:
         name: Run tests
         command: |
-                    chmod u+x deploy.sh && ./deploy.sh
-        no_output_timeout: 235m
+                    chmod u+x install.sh && ./install.sh
+        no_output_timeout: 290m
 version: 2.0
 jobs:
-  build:
+  amed:
     docker:
       - image: ruby
     steps:
       - checkout
-  build1:
+  amed1:
     <<: *script
     docker:
       - image: ruby:2.7
-  build2:
+  amed2:
     <<: *script
     docker:
       - image: ruby:2.6
-  build3:
+  amed3:
     <<: *script
     docker:
       - image: ruby:2.5
-  build4:
+  amed4:
     <<: *script
     docker:
       - image: ruby:2.4
-  build5:
+  amed5:
     <<: *script
     docker:
       - image: ruby:2.3
-  build6:
+  amed6:
     docker:
       - image: ruby
     steps:
       - checkout
-  build7:
+  amed7:
     <<: *script
     docker:
       - image: ruby:2.7
-  build8:
+  amed8:
     <<: *script
     docker:
       - image: ruby:2.6
-  build9:
+  amed9:
     <<: *script
     docker:
       - image: ruby:2.5
-  build10:
+  amed10:
     <<: *script
     docker:
       - image: ruby:2.4
@@ -65,35 +65,35 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build
-      - build1
-      - build2
-      - build3
-      - build4
-      - build5
-      - build6
-      - build7
-      - build8
-      - build9
-      - build10
+      - amed
+      - amed1
+      - amed2
+      - amed3
+      - amed4
+      - amed5
+      - amed6
+      - amed7
+      - amed8
+      - amed9
+      - amed10
     triggers:
       - schedule:
-          cron: "0 0,8,16 * * *"
+          cron: "0 0,7,15 * * *"
           filters:
             branches:
               only:
                 - master
                 
-  buildrunjob:
+  amedrunjob:
     jobs:
-      - build
-      - build1
-      - build2
-      - build3
-      - build4
-      - build5
-      - build6
-      - build7
-      - build8
-      - build9
-      - build10
+      - amed
+      - amed1
+      - amed2
+      - amed3
+      - amed4
+      - amed5
+      - amed6
+      - amed7
+      - amed8
+      - amed9
+      - amed10
